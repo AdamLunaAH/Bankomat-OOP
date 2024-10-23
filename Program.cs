@@ -1,4 +1,6 @@
-﻿namespace Bankomat_OOP
+﻿using System.Collections.Generic;
+
+namespace Bankomat_OOP
 {
     //public class Account
     //{
@@ -39,6 +41,11 @@
 
             List<Account> accountList = new List<Account>();
 
+            Account account1Example = new Account(12345, "Abc", 123, 2.5m, 200, 50);
+            accountList.Add(account1Example);
+            Account account2Example = new Account(67890, "Def", 456, 4.5m, 150, 30);
+            accountList.Add(account2Example);
+
             int accountNrCheck;
 
             Console.WriteLine("Bankomat OOP\n");
@@ -74,25 +81,26 @@
                     case "1":
 
                         //Insättning;
+                        DepositClass.Deposit(accountList);
 
-                        Console.WriteLine("Insättning");
+                        //Console.WriteLine("Insättning");
 
-                        Console.WriteLine("Vad är kontonumret på kontot som insättningen ska utföras");
-                         accountNrCheck = Int32.Parse(Console.ReadLine());
+                        //Console.WriteLine("Vad är kontonumret på kontot som insättningen ska utföras");
+                        // accountNrCheck = Int32.Parse(Console.ReadLine());
 
-                        foreach (Account accounts in accountList)
-                        {
-                            if (accountNrCheck == accounts.AccountNr)
-                            {
-                                Console.WriteLine("Hur mycket ska sättas in?");
+                        //foreach (Account accounts in accountList)
+                        //{
+                        //    if (accountNrCheck == accounts.AccountNr)
+                        //    {
+                        //        Console.WriteLine("Hur mycket ska sättas in?");
 
-                                decimal depositCheck = decimal.Parse(Console.ReadLine());
+                        //        decimal depositCheck = decimal.Parse(Console.ReadLine());
 
-                                accounts.Balance += depositCheck;
+                        //        accounts.Balance += depositCheck;
 
-                                Console.WriteLine($"Nya saldot för konto {accounts.AccountNr} är {accounts.Balance}");
-                            }
-                        }
+                        //        Console.WriteLine($"Nya saldot för konto {accounts.AccountNr} är {accounts.Balance}");
+                        //    }
+                        //}
 
 
 
@@ -104,24 +112,26 @@
                     case "2":
 
                         //Uttag
-                        Console.WriteLine("Uttag");
 
-                        Console.WriteLine("Vad är kontonumret på kontot som uttag ska utföras");
-                        accountNrCheck = Int32.Parse(Console.ReadLine());
+                        WithdrawClass.Withdraw(accountList);
+                        //Console.WriteLine("Uttag");
 
-                        foreach (Account accounts in accountList)
-                        {
-                            if (accountNrCheck == accounts.AccountNr)
-                            {
-                                Console.WriteLine("Hur mycket ska tas ur?");
+                        //Console.WriteLine("Vad är kontonumret på kontot som uttag ska utföras");
+                        //accountNrCheck = Int32.Parse(Console.ReadLine());
 
-                                decimal depositCheck = decimal.Parse(Console.ReadLine());
+                        //foreach (Account accounts in accountList)
+                        //{
+                        //    if (accountNrCheck == accounts.AccountNr)
+                        //    {
+                        //        Console.WriteLine("Hur mycket ska tas ur?");
 
-                                accounts.Balance -= depositCheck;
+                        //        decimal withdrawCheck = decimal.Parse(Console.ReadLine());
 
-                                Console.WriteLine($"Nya saldot för konto {accounts.AccountNr} är {accounts.Balance}");
-                            }
-                        }
+                        //        accounts.Balance -= withdrawCheck;
+
+                        //        Console.WriteLine($"Nya saldot för konto {accounts.AccountNr} är {accounts.Balance}");
+                        //    }
+                        //}
 
 
                         break;
@@ -130,11 +140,38 @@
 
                         //Kontosaldo
 
+                        AccountBalanceClass.AccountBalance(accountList);
+
+                        //Console.WriteLine("Kontosaldo");
+
+                        //Console.WriteLine("Vad är kontonumret på kontot som saldot ska visas");
+                        //accountNrCheck = Int32.Parse(Console.ReadLine());
+
+                        //foreach (Account accounts in accountList)
+                        //{
+                        //    if (accountNrCheck == accounts.AccountNr)
+                        //    {
+                        //        Console.WriteLine($"Saldot på kontot {accounts.AccountNr} är {accounts.Balance}");
+                        //    }
+                        //}
+
+
+
+                        //Console.WriteLine(accounts)
+
                         break;
 
                     case "4":
 
                         //Konton och saldon
+                        AccountAndBalanceListClass.AccountAndBalanceList(accountList);
+
+                        //Console.WriteLine("Kontonnummer och kontosaldon\n");
+
+                        //foreach (Account accounts in accountList) 
+                        //{
+                        //   Console.WriteLine($"Kontonr: {accounts.AccountNr}\nKontosaldo: {accounts.Balance}\n");
+                        //}
 
                         break;
 
@@ -142,44 +179,46 @@
 
                         //Skapa konto
 
-                        //CreateAccount();
+                        CreateAccountClass.CreateAccount(accountList);
+
+                    //    //CreateAccount();
 
 
-                        Console.WriteLine("Skapa konto\n");
+                    //    Console.WriteLine("Skapa konto\n");
 
-                        Console.WriteLine("Skriv i Id-nummer:");
-                        int tempIdNr = Int32.Parse(Console.ReadLine());
+                    //    Console.WriteLine("Skriv i Id-nummer:");
+                    //    int tempIdNr = Int32.Parse(Console.ReadLine());
 
-                        Console.WriteLine("Skriv i kontonummer");
-                        int tempAccountNr = Int32.Parse(Console.ReadLine());
+                    //    Console.WriteLine("Skriv i kontonummer");
+                    //    int tempAccountNr = Int32.Parse(Console.ReadLine());
 
-                        Console.WriteLine("Skriv in kontonamn");
-                        string tempAccountName = Console.ReadLine();
+                    //    Console.WriteLine("Skriv in kontonamn");
+                    //    string tempAccountName = Console.ReadLine();
                 
 
                
-                        Console.WriteLine("Skriv in räntesats");
-                        decimal tempInterestRate = Decimal.Parse(Console.ReadLine());
+                    //    Console.WriteLine("Skriv in räntesats");
+                    //    decimal tempInterestRate = Decimal.Parse(Console.ReadLine());
                 
 
                 
-                        Console.WriteLine("Skriv in insättning");
-                        decimal tempBalance = Decimal.Parse(Console.ReadLine());
+                    //    Console.WriteLine("Skriv in insättning");
+                    //    decimal tempBalance = Decimal.Parse(Console.ReadLine());
 
-                        Console.WriteLine("Skriv i max kredit");
-                        decimal tempMaxCredit = Decimal.Parse(Console.ReadLine());
+                    //    Console.WriteLine("Skriv i max kredit");
+                    //    decimal tempMaxCredit = Decimal.Parse(Console.ReadLine());
 
 
-                    Account account = new Account(tempAccountNr, tempAccountName, tempIdNr, tempInterestRate, tempBalance, tempMaxCredit);
+                    //Account account = new Account(tempAccountNr, tempAccountName, tempIdNr, tempInterestRate, tempBalance, tempMaxCredit);
 
-                        accountList.Add(account);
+                    //    accountList.Add(account);
 
                         
 
-                        foreach (Account accounts in accountList)
-                        {
-                            Console.WriteLine($"AccountNr: {accounts.AccountNr}\nAccountName: {accounts.AccountName}\nIdNr: {accounts.IdNr}\nInterestRate: {accounts.InterestRate}\nBalance: {accounts.Balance}\nMaxCredit: {accounts.MaxCredit}\n");
-                        }
+                    //    foreach (Account accounts in accountList)
+                    //    {
+                    //        Console.WriteLine($"AccountNr: {accounts.AccountNr}\nAccountName: {accounts.AccountName}\nIdNr: {accounts.IdNr}\nInterestRate: {accounts.InterestRate}\nBalance: {accounts.Balance}\nMaxCredit: {accounts.MaxCredit}\n");
+                    //    }
 
 
                         break;
@@ -204,5 +243,49 @@
 
             }   
         }
+
+        
+
+        //List<Account> accountList = new List<Account>();
+        //static void CreateAccount(List<Account> accountList)
+        //{
+        //    Console.WriteLine("Skapa konto\n");
+
+        //    Console.WriteLine("Skriv i Id-nummer:");
+        //    int tempIdNr = Int32.Parse(Console.ReadLine());
+
+        //    Console.WriteLine("Skriv i kontonummer");
+        //    int tempAccountNr = Int32.Parse(Console.ReadLine());
+
+        //    Console.WriteLine("Skriv in kontonamn");
+        //    string tempAccountName = Console.ReadLine();
+
+
+
+        //    Console.WriteLine("Skriv in räntesats");
+        //    decimal tempInterestRate = Decimal.Parse(Console.ReadLine());
+
+
+
+        //    Console.WriteLine("Skriv in insättning");
+        //    decimal tempBalance = Decimal.Parse(Console.ReadLine());
+
+        //    Console.WriteLine("Skriv i max kredit");
+        //    decimal tempMaxCredit = Decimal.Parse(Console.ReadLine());
+
+
+        //    Account account = new Account(tempAccountNr, tempAccountName, tempIdNr, tempInterestRate, tempBalance, tempMaxCredit);
+
+        //    accountList.Add(account);
+
+
+
+        //    foreach (Account accounts in accountList)
+        //    {
+        //        Console.WriteLine($"AccountNr: {accounts.AccountNr}\nAccountName: {accounts.AccountName}\nIdNr: {accounts.IdNr}\nInterestRate: {accounts.InterestRate}\nBalance: {accounts.Balance}\nMaxCredit: {accounts.MaxCredit}\n");
+        //    }
+        //}
     }
+
+    
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bankomat_OOP
 {
-    internal class Account
+    public class Account
     {
         public int AccountNr { get; set; }
 
