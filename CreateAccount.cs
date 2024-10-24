@@ -15,24 +15,39 @@ namespace Bankomat_OOP
             Console.WriteLine("Skriv i Id-nummer:");
             int tempIdNr = Int32.Parse(Console.ReadLine());
 
-            Console.WriteLine("Skriv i kontonummer");
-            int tempAccountNr = Int32.Parse(Console.ReadLine());
+            //Console.WriteLine("Skriv i kontonummer");
+            //int tempAccountNr = Int32.Parse(Console.ReadLine());
+
+            Random rnd = new Random();
+
+            int tempAccountNr = rnd.Next(1111,9999);
 
             Console.WriteLine("Skriv in kontonamn");
             string tempAccountName = Console.ReadLine();
 
 
 
-            Console.WriteLine("Skriv in räntesats");
-            decimal tempInterestRate = Decimal.Parse(Console.ReadLine());
+            //Console.WriteLine("Skriv in räntesats");
+            //decimal tempInterestRate = Decimal.Parse(Console.ReadLine());
 
+            //double tempInterestRate = rnd.Next(-5,6);
+            decimal rndNrNext = rnd.Next(0, 6);
+            double rndNrNextDouble = rnd.NextDouble();
+            decimal rndNrDec = Convert.ToDecimal(rndNrNextDouble);
+            rndNrDec = Math.Round(rndNrDec, 2);
+
+            decimal tempInterestRate = rndNrNext + rndNrDec; 
+
+           
 
 
             Console.WriteLine("Skriv in insättning");
             decimal tempBalance = Decimal.Parse(Console.ReadLine());
 
+
             Console.WriteLine("Skriv i max kredit");
             decimal tempMaxCredit = Decimal.Parse(Console.ReadLine());
+
 
 
             Account account = new Account(tempAccountNr, tempAccountName, tempIdNr, tempInterestRate, tempBalance, tempMaxCredit);
