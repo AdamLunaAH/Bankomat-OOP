@@ -29,38 +29,6 @@ namespace Bankomat_OOP
             MaxCredit = maxCredit;
         }
 
-        //List<Account> List { get; set; } = new List<Account>();
-
-        //public void Deposit() 
-        //{
-            
-        //}
-
-        //public void Withdraw()
-        //{
-            
-        //}
-
-        //public void AccountBalance()
-        //{
-            
-        //}
-
-        //public void ShowAccountsAndBalance()
-        //{
-
-        //}
-
-        ////public void CreateAccount() 
-        ////{
-            
-        ////}
-
-        //public void DeleteAccount() 
-        //{
-            
-        //}
-
         
     }
 }
