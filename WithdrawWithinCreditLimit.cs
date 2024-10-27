@@ -6,19 +6,20 @@ using System.Threading.Tasks;
 
 namespace Bankomat_OOP
 {
-    internal class WithdrawClass
+    internal class WithdrawWithinCreditLimitClass
     {
 
         // Deklarerar och används för att validera input
         private readonly InputValidator _inputValidator;
 
         // Konstruktor till inputvalidering
-        public WithdrawClass(InputValidator inputValidator)
+        public WithdrawWithinCreditLimitClass(InputValidator inputValidator)
         {
             _inputValidator = inputValidator;
         }
-        // Metod för att hantera uttag från ett konto.
-        public void Withdraw(List<Account> accountList)
+
+        // Metod för att hantera uttag från ett konto med kreditgräns.
+        public void WithdrawWithinCreditLimit(List<Account> accountList)
         {
             // Variabel till kontonummer för validering och kontoval
             string accountNrCheck;
@@ -56,6 +57,7 @@ namespace Bankomat_OOP
                     accountNrOk = _inputValidator.ConvertToInt(accountNrCheck);
                     break;
                 }
+
                 // Om input är fel får man mata in ett nytt tal
                 accountNrCheck = Console.ReadLine();
 
@@ -64,7 +66,6 @@ namespace Bankomat_OOP
 
             // Letar efter kontot i listan med det validerade kontonumret.
             Account accountFound = accountList.FirstOrDefault(a => a.AccountNr == accountNrOk);
-
 
             // Belopp inmatning
             Console.WriteLine("Hur mycket ska tas ur?");
@@ -87,15 +88,15 @@ namespace Bankomat_OOP
                 {
                     Console.WriteLine("Valet måste vara ett positivt tal. Försök igen");
                 }
+                // Kollar om uttagsbelopet är större än kreditgränsen
+                else if (_inputValidator.IsGreaterThanBalance(withdrawCheck, accountFound.MaxCredit))
+                {
+                    Console.WriteLine("Beloppet överstiger Kreditgränsen. Försök igen.");
+                }
                 // Kollar om uttagsbelopet är större än kontosaldot
                 else if (_inputValidator.IsGreaterThanBalance(withdrawCheck, accountFound.Balance))
                 {
-                    Console.WriteLine("Beloppet överstiger kontosaldot. Försök igen.");
-                }
-                // Kollar om beloppet är noll
-                else if (_inputValidator.IsGreaterThanZero(withdrawCheck))
-                {
-                    Console.WriteLine("Beloppet är 0. Försök igen.");
+                    Console.WriteLine("Beloppet överstiger Saldot. Försök igen.");
                 }
                 else
                 {
@@ -103,16 +104,19 @@ namespace Bankomat_OOP
                     withdrawCheckOk = _inputValidator.ConvertToDecimal(withdrawCheck);
                     break;
                 }
-
                 // Om input är fel får man mata in ett nytt tal
                 withdrawCheck = Console.ReadLine();
 
             }
 
+
             // Uppdaterar saldot till det nya saldot, och presenterar det ny saldot.
             accountFound.Balance -= withdrawCheckOk;
             Console.WriteLine($"Nya saldot för konto {accountFound.AccountNr} är {accountFound.Balance}");
             ExitToMenuClass.ExitToMenu();
+
+            return;
+
 
         }
     }

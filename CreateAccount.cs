@@ -9,37 +9,40 @@ namespace Bankomat_OOP
 {
     internal class CreateAccountClass
     {
+        // Deklarerar och används för att validera input
         private readonly InputValidator _inputValidator;
 
+        // Konstruktor till inputvalidering
         public CreateAccountClass(InputValidator inputValidator)
         {
             _inputValidator = inputValidator;
         }
 
-
+        // Metod för att skapa ett konto och lägga till det i kontolistan
         public void CreateAccount(List<Account> accountList)
         {
             Console.WriteLine("Skapa konto\n");
-
+            // Idnummer
             int tempIdNr = AccountIdNr();
-
-            int tempAccountNr = AccountNr();
-
-
+            // Kontonummer
+            int tempAccountNr = AccountNr(accountList);
+            // Kontonamn
             string tempAccountName = AccountName();
-
+            // Kontosaldo
             decimal tempBalance = AccountBalance();
-
+            // Ränta
             decimal tempInterestRate = AccountInterestRate();
-
+            // Kredit
             decimal tempMaxCredit = AccountCredit(tempBalance);
 
+            // Skapar ett nytt kontoobjekt
             Account account = new Account(tempAccountNr, tempAccountName, tempIdNr, tempBalance, tempInterestRate, tempMaxCredit);
 
+            // Lägger till kontot i kontolistan
             accountList.Add(account);
 
 
-
+            // Presenterar informationen på det nya kontot
             foreach (Account accounts in accountList)
             {
                 if (accounts.AccountNr == tempAccountNr)
@@ -48,53 +51,69 @@ namespace Bankomat_OOP
                     Console.WriteLine($"AccountNr: {accounts.AccountNr}\nAccountName: {accounts.AccountName}\nIdNr: {accounts.IdNr}\nBalance: {accounts.Balance}\nInterestRate: {accounts.InterestRate}\nMaxCredit: {accounts.MaxCredit}\n");
                 }
             }
+
+            ExitToMenuClass.ExitToMenu();
+
         }
 
-
-
-
-
-
-
-
-
-
-
-
+        // Skapa en Idnummer (till skillnad från kontonumret så behöver detta inte vara unikt)
         private int AccountIdNr()
         {
             Console.WriteLine("Skriv i Id-nummer:");
             int accountIdNrOk = 0;
             string tempIdNrStr = Console.ReadLine();
 
+            // Input validering
             while (true)
             {
+                // Kollar om input är tom
                 if (_inputValidator.IsEmpty(tempIdNrStr))
                 {
                     Console.WriteLine("Valet kan inte vara tomt. Försök igen.");
                 }
+                // Kollar om input är ett nummer
                 else if (!_inputValidator.IsNumber(tempIdNrStr))
                 {
                     Console.WriteLine("Valet måste vara ett nummer. Försök igen.");
                 }
+
+                // Kollar om talet är negativt
+                else if (_inputValidator.IsNumberNegative(tempIdNrStr))
+                {
+                    Console.WriteLine("Valet måste vara ett positivt tal. Försök igen");
+                }
                 else
                 {
+                    // Konverterar string till nummer
                     accountIdNrOk = _inputValidator.ConvertToInt(tempIdNrStr);
                     break;
                 }
 
+                // Om input är fel får man mata in ett nytt tal
                 tempIdNrStr = Console.ReadLine();
             }
 
             return accountIdNrOk;
         }
 
-        private static int AccountNr()
+        // Skapar ett slumpmässigt kontonummer med RandomNumberGenerator (Då detta är säkrare och mer "slumpmässigt" än Random)
+        private int AccountNr(List<Account> accountList)
         {
+            int accountNrOk;
 
-            int accountNrOk = RandomAccountNumber();
+            // Loopar om ett icke-unikt kontonummer skapdes
+            do
+            {
+                accountNrOk = RandomAccountNumber();
+            } while (accountList.Any(account => account.AccountNr == accountNrOk));
 
-            static int RandomAccountNumber()
+            return accountNrOk;
+        }
+
+        private int RandomAccountNumber()
+        {
+            int accountNumberInt;
+            do
             {
                 byte[] randomNumber = new byte[2];
                 using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
@@ -102,14 +121,15 @@ namespace Bankomat_OOP
                     rng.GetBytes(randomNumber);
                 }
 
-                int accountNumberInt = BitConverter.ToInt16(randomNumber, 0);
-
-                return accountNumberInt % 90000 + 10000;
+                accountNumberInt = BitConverter.ToInt16(randomNumber, 0);
             }
-
-            return accountNrOk;
+            // loopar tills ett nummer mellan 10000 och 99999 hittas
+            while (accountNumberInt < 10000 || accountNumberInt > 99999);
+            
+            return accountNumberInt;
         }
 
+        // Skapa en kontonamn
         private string AccountName()
         {
             Console.WriteLine("Skriv in kontonamn");
@@ -117,6 +137,7 @@ namespace Bankomat_OOP
 
             while (true)
             {
+                // Kollar om input är tom
                 if (_inputValidator.IsEmpty(accountNameOk))
                 {
                     Console.WriteLine("Valet kan inte vara tomt. Försök igen.");
@@ -125,6 +146,7 @@ namespace Bankomat_OOP
                 {
                     break;
                 }
+                // Om input är fel får man mata in ett nytt tal
                 accountNameOk = Console.ReadLine();
             }
 
@@ -140,14 +162,17 @@ namespace Bankomat_OOP
 
             while (true)
             {
+                // Kollar om input är tom
                 if (_inputValidator.IsEmpty(tempBalanceStr))
                 {
                     Console.WriteLine("Valet kan inte vara tomt. Försök igen.");
                 }
+                // Kollar om input är ett decimaltal (behöver inte innehålla decimaler)
                 else if (!_inputValidator.IsNumberDecimal(tempBalanceStr))
                 {
                     Console.WriteLine("Valet måste vara ett decimaltal. Försök igen.");
                 }
+                // Kollar om talet är negativt
                 else if (_inputValidator.IsDecimalNegative(tempBalanceStr))
                 {
                     Console.WriteLine("Valet måste vara ett positivt tal. Försök igen");
@@ -158,6 +183,7 @@ namespace Bankomat_OOP
                     break;
                 }
 
+                // Om input är fel får man mata in ett nytt tal
                 tempBalanceStr = Console.ReadLine();
             }
 
@@ -169,97 +195,78 @@ namespace Bankomat_OOP
             Console.WriteLine("Ränta\n");
             decimal interestRateOk = 0;
 
-
             Console.WriteLine("Välj om räntan ska skapas automatiskt eller om en manuell ränta ska väljas.\n1. Automatisk ränta\n2. Manuell ränta");
             string menuInputStr = Console.ReadLine();
 
-            int menuChoice;
+            int menuChoice = 0;
             while (true)
             {
+                
+                // Kollar om input är tom
                 if (_inputValidator.IsEmpty(menuInputStr))
                 {
                     Console.WriteLine("Valet kan inte vara tomt. Försök igen.");
                 }
+                // Kollar om input är ett nummer
                 else if (!_inputValidator.IsNumber(menuInputStr))
                 {
                     Console.WriteLine("Valet måste vara ett nummer. Försök igen.");
                 }
                 else
                 {
+                    // Konverterar string till nummer
                     menuChoice = _inputValidator.ConvertToInt(menuInputStr);
                     break;
                 }
 
-
-                AccountInterestRate();
-        
             }
 
             switch (menuChoice)
-
             {
-
                 case 1:
-
                     //Automatisk ränta;
-
                     interestRateOk = InterestRateAuto();
-
                     break;
 
                 case 2:
-
                     //Manuell ränta
-
                     interestRateOk = InterestRateManual();
-
                     break;
 
                 default:
-
                     Console.WriteLine("Ogiltigt val. Försök igen.");
-                    AccountInterestRate();
-                    break;
-
+                    return AccountInterestRate();
             }
             return interestRateOk;
 
-
         }
 
+        // Skapar en slumpmässig ränta med RandomNumberGenerator (Då detta är säkrare och mer "slumpmässigt" än Random)
         private decimal InterestRateAuto()
         {
-
-
-
-
-           
-
-            decimal interestRateOk;
             decimal accountInterest = RandomInterest();
+            return accountInterest;
 
-            static decimal RandomInterest()
-            {
-                byte[] randomNumber = new byte[4];
-                using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
-                {
-                    rng.GetBytes(randomNumber);
-                }
-
-                int randomInt = BitConverter.ToInt32(randomNumber, 0) & int.MaxValue;
-
-                
-                decimal accountInterest = (randomInt % 501) / 100.0m; 
-                return accountInterest;
-
-            }
-
-            return interestRateOk = accountInterest;
-
-
-        
         }
 
+        // Skapar en slumpmässig ränta med RandomNumberGenerator (Då detta är säkrare och mer "slumpmässigt" än Random)
+        private decimal RandomInterest()
+        {
+            byte[] randomNumber = new byte[4];
+            using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomNumber);
+            }
+
+            int randomInt = BitConverter.ToInt32(randomNumber, 0) & int.MaxValue;
+
+            // Räntan är mellen 0,00 och 5,00
+            decimal accountInterest = (randomInt % 501) / 100.0m;
+            return accountInterest;
+
+        }
+
+        // Hämtar och validerar användarens manuella input för räntesats
         private decimal InterestRateManual()
         {
             Console.WriteLine("Skriv in räntesats (0,00 — 5,00");
@@ -269,21 +276,25 @@ namespace Bankomat_OOP
 
             while (true)
             {
+                // Kollar om input är tom
                 if (_inputValidator.IsEmpty(tempInterestRateStr))
                 {
                     Console.WriteLine("Valet kan inte vara tomt. Försök igen.");
                 }
+                // Kollar om input är ett decimaltal (behöver inte innehålla decimaler)
                 else if (!_inputValidator.IsNumberDecimal(tempInterestRateStr))
                 {
                     Console.WriteLine("Valet måste vara ett decimaltal. Försök igen.");
                 }
+                // Kollar om talet är negativt
                 else if (_inputValidator.IsDecimalNegative(tempInterestRateStr))
                 {
                     Console.WriteLine("Valet måste vara ett positivt tal. Försök igen");
                 }
+                // Kollar om talet är mellan 0,00 och 5,00
                 else if (!_inputValidator.IsDecimalBetweenZeroAndFive(tempInterestRateStr))
                 {
-                    Console.WriteLine("Valet måste vara ett tal mellan 0 och 5. Försök igen");
+                    Console.WriteLine("Valet måste vara ett tal mellan 0,00 och 5,00 Försök igen");
                 }
                 else
                 {
@@ -291,9 +302,8 @@ namespace Bankomat_OOP
                     break;
                 }
 
-
-                InterestRateManual();
-                
+                // Om input är fel får man mata in ett nytt tal
+                tempInterestRateStr = Console.ReadLine();               
             }
 
             return interestRateOk;
@@ -301,6 +311,7 @@ namespace Bankomat_OOP
 
         }
 
+        // Hämtar och validerar användarens input för max kreditgräns
         private decimal AccountCredit(decimal tempBalance)
         {
             Console.WriteLine("Skriv i max kredit");
@@ -310,18 +321,22 @@ namespace Bankomat_OOP
 
             while (true)
             {
+                // Kollar om input är tom
                 if (_inputValidator.IsEmpty(tempMaxCreditStr))
                 {
                     Console.WriteLine("Valet kan inte vara tomt. Försök igen.");
                 }
+                // Kollar om input är ett decimaltal (behöver inte innehålla decimaler)
                 else if (!_inputValidator.IsNumberDecimal(tempMaxCreditStr))
                 {
                     Console.WriteLine("Valet måste vara ett decimaltal. Försök igen.");
                 }
+                // Kollar om talet är negativt
                 else if (_inputValidator.IsDecimalNegative(tempMaxCreditStr))
                 {
                     Console.WriteLine("Valet måste vara ett positivt tal. Försök igen");
                 }
+                // Kollar om talet är större än saldot
                 else if (_inputValidator.IsGreaterThanBalance(tempMaxCreditStr, tempBalance))
                 {
                     Console.WriteLine("Beloppet överstiger kontosaldot. Försök igen.");
@@ -332,6 +347,7 @@ namespace Bankomat_OOP
                     break;
                 }
 
+                // Om input är fel får man mata in ett nytt tal
                 tempMaxCreditStr = Console.ReadLine();
             }
 

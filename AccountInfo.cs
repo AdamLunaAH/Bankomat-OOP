@@ -6,29 +6,28 @@ using System.Threading.Tasks;
 
 namespace Bankomat_OOP
 {
-    // Klass som hämtar kontonummer och saldo från ett konto
-    internal class AccountBalanceClass
+    internal class AccountInfoClass
     {
         // Deklarerar och används för att validera input
         private readonly InputValidator _inputValidator;
 
         // Konstruktor till inputvalidering
-        public AccountBalanceClass(InputValidator inputValidator)
+        public AccountInfoClass(InputValidator inputValidator)
         {
             _inputValidator = inputValidator;
         }
 
-        // Kontosaldo metoden
-        public void AccountBalance(List<Account> accountList) 
+        // Kontoinformation metoden
+        public void AccountInfo(List<Account> accountList)
         {
             // Variabel till kontonummer för validering och kontoval
             string accountNrCheck;
             // Konverterad accountNrCheck variabel för användning efter validering
             int accountNrOk = 0;
-            Console.WriteLine("Kontosaldo");
+            Console.WriteLine("Kontoinformation");
 
             // Kontonummer inmatning
-            Console.WriteLine("Vad är kontonumret på kontot som saldot ska visas");
+            Console.WriteLine("Vad är kontonumret på kontot som informationen ska visas");
             accountNrCheck = Console.ReadLine();
 
             while (true)
@@ -60,13 +59,17 @@ namespace Bankomat_OOP
 
             }
 
+
             // Hämta kontot som matchar det validerade kontonumret från kontolistan
             Account accountFound = accountList.FirstOrDefault(a => a.AccountNr == accountNrOk);
 
-            // Skriv ut kontosaldot för kontot
-            Console.WriteLine($"Saldot på kontot {accountFound.AccountNr} är {accountFound.Balance}");
+
+            // Skriv ut kontoinformation
+            Console.WriteLine("Kontonummer| Kontonamn | Idnummer | Kontosaldo | Ränta | Kredit");
+            Console.WriteLine($"{accountFound.AccountNr} | {accountFound.AccountName} | {accountFound.IdNr} | {accountFound.Balance} | {accountFound.InterestRate} | {accountFound.MaxCredit}");
 
             ExitToMenuClass.ExitToMenu();
+
 
         }
     }

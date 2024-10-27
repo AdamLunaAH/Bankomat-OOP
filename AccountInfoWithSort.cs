@@ -6,59 +6,110 @@ using System.Threading.Tasks;
 
 namespace Bankomat_OOP
 {
+    // Klass till kontosorteringen
     public class AccountInfoWithSortClass
     {
+        // Deklarerar och används för att validera input
+        private readonly InputValidator _inputValidator;
+
+        // Konstruktor till inputvalidering
+        public AccountInfoWithSortClass(InputValidator inputValidator)
+        {
+            _inputValidator = inputValidator;
+        }
+
+        // Sorteringsvalet
         public int SortOption { get; set; }
 
+        // Konstruktor till sorteringsvalet
         public AccountInfoWithSortClass(int sortOption) { SortOption = sortOption; }
 
-        public static void AccountInfoWithSortUI(List<Account> accountList, int sortOption)
+        // Menyvalsmetod
+        public void AccountInfoWithSortUI(List<Account> accountList, int sortOption)
         {
-
+            // Menyval
             Console.WriteLine("Kontoinformation med sortering\n\n1. Kontosaldo i fallande ordning\n2. Kontosaldo i stigande ordning\n3. Ränta i fallande ordning\n4 .Ränta i stigande ordning\n5. Avsluta\n");
-            string option = Console.ReadLine();
-            switch (option)
-            {
 
-                case "1":
+            // Variabel till menyval för validering och menyval
+            string menuInputStr;
+            // Konverterad menuInputStr variabel för användning efter validering
+            int menuChoice;
+
+            while (true)
+            {
+                //Menyvalinmatning
+                menuInputStr = Console.ReadLine();
+
+                // Kollar om input är tom
+                if (_inputValidator.IsEmpty(menuInputStr))
+                {
+                    Console.WriteLine("Valet kan inte vara tomt. Försök igen.");
+                    continue;
+                }
+                // Kollar om input är ett nummer
+                else if (!_inputValidator.IsNumber(menuInputStr))
+                {
+                    Console.WriteLine("Valet måste vara ett nummer. Försök igen.");
+                    continue;
+                }
+                else
+                {
+                    // Konverterar string till nummer
+                    menuChoice = _inputValidator.ConvertToInt(menuInputStr);
+                    break;
+                }
+            }
+
+            // Går tillbaka till menyn
+            if (menuChoice == 5)
+            {
+                Console.WriteLine();
+                return;
+            }
+
+            // Kör sorteringsfunktionen beroende på användarensval
+            switch (menuChoice)
+            {
+                case 1:
                     sortOption = 1;
                     AccountInfoWithSort(accountList, sortOption);
                     break;
 
-                case "2":
+                case 2:
                     sortOption = 2;
                     AccountInfoWithSort(accountList, sortOption);
                     break;
-            
-                case "3":
+
+                case 3:
                     sortOption = 3;
                     AccountInfoWithSort(accountList, sortOption);
 
                     break;
 
-                case "4":
+                case 4:
                     sortOption = 4;
                     AccountInfoWithSort(accountList, sortOption);
                     break;
 
-                case "5":
+                case 5:
                     break;
 
                 default:
-
+                    // Meddelande för ogiltigt val, anropar metoden igen för ny inmatning
                     Console.WriteLine("Ogiltigt val. Försök igen.");
                     AccountInfoWithSortUI(accountList, sortOption);
-                    return;
-
-
+                    break;
             }
 
         }
 
+        // Metod för att sortera och visa kontoinformation beroende på det valda sorteringsalternativ
         public static void AccountInfoWithSort(List<Account> accountList, int sortOption)
         {
 
+            // Skapar en kopia av kontolistan för sortering
             List<Account> sortList = accountList;
+            // Sorteringsval
             switch (sortOption)
             {
 
@@ -88,17 +139,17 @@ namespace Bankomat_OOP
 
             }
 
-            
+            // Presenterar den sorterade kontolistan
             Console.WriteLine("Kontonr, Kontosaldo, Ränta");
             foreach (Account accounts in sortList)
             {
                 Console.WriteLine($"{accounts.AccountNr} | {accounts.Balance} | {accounts.InterestRate}");
             }
 
-            Console.WriteLine("Tryck på enter för att gå tillbaka till menyn");
-            Console.ReadKey();
+            ExitToMenuClass.ExitToMenu();
 
-            
+
+
         }
     }
 }
