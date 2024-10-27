@@ -19,13 +19,13 @@ namespace Bankomat_OOP
 
 
 
-        public Account(int accountNr, string accountName, int idNr, decimal interestRate, decimal balance, decimal maxCredit) 
+        public Account(int accountNr, string accountName, int idNr, decimal balance, decimal interestRate, decimal maxCredit) 
         {
             AccountNr = accountNr;
             AccountName = accountName;
             IdNr = idNr;
-            InterestRate = interestRate;
             Balance = balance;
+            InterestRate = interestRate;
             MaxCredit = maxCredit;
         }
 

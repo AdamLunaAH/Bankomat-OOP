@@ -8,28 +8,94 @@ namespace Bankomat_OOP
 {
     internal class DepositClass
     {
-        public static void Deposit(List<Account> accountList) 
+
+        private readonly InputValidator _inputValidator;
+
+        public DepositClass(InputValidator inputValidator)
         {
-            int accountNrCheck;
+            _inputValidator = inputValidator;
+        }
+
+        public void Deposit(List<Account> accountList) 
+        {
+            string accountNrCheck;
+            int accountNrOk = 0;
+            decimal depositCheckOk = 0;
+
             Console.WriteLine("Insättning");
-
             Console.WriteLine("Vad är kontonumret på kontot som insättningen ska utföras");
-            accountNrCheck = Int32.Parse(Console.ReadLine());
+            accountNrCheck = Console.ReadLine();
 
+            while (true)
+            {
+                if (_inputValidator.IsEmpty(accountNrCheck))
+                {
+                    Console.WriteLine("Valet kan inte vara tomt. Försök igen.");
+                }
+                else if (!_inputValidator.IsNumber(accountNrCheck))
+                {
+                    Console.WriteLine("Valet måste vara ett nummer. Försök igen.");
+                }
+                else
+                {
+                    accountNrOk = _inputValidator.ConvertToInt(accountNrCheck);
+                    break;
+                }
+
+                accountNrCheck = Console.ReadLine();
+            }
+
+            bool accountExists = false;
             foreach (Account accounts in accountList)
             {
-                if (accountNrCheck == accounts.AccountNr)
+                if (accountNrOk == accounts.AccountNr)
                 {
-                    Console.WriteLine("Hur mycket ska sättas in?");
-
-                    decimal depositCheck = decimal.Parse(Console.ReadLine());
-
-                    accounts.Balance += depositCheck;
-
-                    Console.WriteLine($"Nya saldot för konto {accounts.AccountNr} är {accounts.Balance}");
+                    accountExists = true;
+                    break;
                 }
             }
 
+            if (!accountExists)
+            {
+                Console.WriteLine("Kontot finns inte.");
+                return; 
+            }
+
+            Console.WriteLine("Hur mycket ska sättas in?");
+            string depositCheck = Console.ReadLine();
+
+            while (true)
+            {
+                if (_inputValidator.IsEmpty(depositCheck))
+                {
+                    Console.WriteLine("Valet kan inte vara tomt. Försök igen.");
+                }
+                else if (!_inputValidator.IsNumberDecimal(depositCheck))
+                {
+                    Console.WriteLine("Valet måste vara ett decimaltal. Försök igen.");
+                }
+                else if (_inputValidator.IsDecimalNegative(depositCheck))
+                {
+                    Console.WriteLine("Valet måste vara ett positivt tal. Försök igen");
+                }
+                else
+                {
+                    depositCheckOk = _inputValidator.ConvertToDecimal(depositCheck);
+                    break;
+                }
+
+                depositCheck = Console.ReadLine();
+            }
+
+            foreach (Account accounts in accountList)
+            {
+                if (accountNrOk == accounts.AccountNr)
+                {
+                    accounts.Balance += depositCheckOk;
+                    Console.WriteLine($"Nya saldot för konto {accounts.AccountNr} är {accounts.Balance}");
+                    return;
+                }
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Bankomat_OOP
 {
     public class AccountInfoWithSortClass
     {
-        private int SortOption { get; set; }
+        public int SortOption { get; set; }
 
         public AccountInfoWithSortClass(int sortOption) { SortOption = sortOption; }
 
@@ -41,9 +41,13 @@ namespace Bankomat_OOP
                     AccountInfoWithSort(accountList, sortOption);
                     break;
 
+                case "5":
+                    break;
+
                 default:
 
                     Console.WriteLine("Ogiltigt val. Försök igen.");
+                    AccountInfoWithSortUI(accountList, sortOption);
                     return;
 
 
