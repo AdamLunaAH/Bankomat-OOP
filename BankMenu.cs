@@ -59,18 +59,10 @@ namespace Bankomat_OOP
                 Console.WriteLine("9. Avsluta");
 
                 string menuInputStr = Console.ReadLine();
-                //int menuOutputInt = 0;
 
                 int menuChoice;
 
 
-
-
-                //MenuInputValidationClass.MenuInputValidation(menuInputStr);
-
-                //int menuChoice = menuOutputInt;
-
-                //string menuChoice = Console.ReadLine();
 
                 while (true)
                 {
@@ -90,8 +82,6 @@ namespace Bankomat_OOP
 
                  
                     BankMenu(accountList, sortOption);
-                    //Console.Write("Välj ett giltigt alternativ: ");
-                    //menuInputStr = Console.ReadLine();
                 }
 
 

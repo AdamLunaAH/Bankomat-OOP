@@ -25,7 +25,6 @@ namespace Bankomat_OOP
 
             int tempAccountNr = AccountNr();
 
-            //Console.WriteLine($"AccountNr: {tempAccountNr}");
 
             string tempAccountName = AccountName();
 
@@ -34,52 +33,6 @@ namespace Bankomat_OOP
             decimal tempInterestRate = AccountInterestRate();
 
             decimal tempMaxCredit = AccountCredit(tempBalance);
-
-            //Console.WriteLine("Skriv i kontonummer");
-            //int tempAccountNr = Int32.Parse(Console.ReadLine());
-            //string accountNrCheck = Console.ReadLine();
-
-            //while (true)
-            //{
-            //    if (_inputValidator.IsEmpty(accountNrCheck))
-            //    {
-            //        Console.WriteLine("Valet kan inte vara tomt. Försök igen.");
-            //    }
-            //    else if (!_inputValidator.IsNumber(accountNrCheck))
-            //    {
-            //        Console.WriteLine("Valet måste vara ett nummer. Försök igen.");
-            //    }
-            //    else
-            //    {
-            //        accountNrOk = _inputValidator.ConvertToInt(accountNrCheck);
-
-            //        foreach (Account accounts in accountList)
-            //        {
-            //            if (accountNrOk == accounts.AccountNr)
-            //            {
-            //                Console.WriteLine("Kontonumret finns redan, tryck på en knapp för att försöka igen.");
-            //                CreateAccount(accountList);
-            //            }
-            //        }
-            //        break;
-            //    }
-
-            //    tempIdNrStr = Console.ReadLine();
-
-
-
-            //var randomBytes = new byte[4];
-            //using (var rng = RandomNumberGenerator.Create())
-            //{
-            //    rng.GetBytes(randomBytes);
-            //    uint trueRandom = BitConverter.ToUInt32(randomBytes, 0);
-            //}
-
-            //    Random rnd = new Random();
-
-            //int tempAccountNr = rnd.Next(1111,9999);
-
-
 
             Account account = new Account(tempAccountNr, tempAccountName, tempIdNr, tempBalance, tempInterestRate, tempMaxCredit);
 
@@ -111,7 +64,6 @@ namespace Bankomat_OOP
         private int AccountIdNr()
         {
             Console.WriteLine("Skriv i Id-nummer:");
-            //int tempIdNr = Int32.Parse(Console.ReadLine());
             int accountIdNrOk = 0;
             string tempIdNrStr = Console.ReadLine();
 
@@ -139,7 +91,6 @@ namespace Bankomat_OOP
 
         private static int AccountNr()
         {
-            //int accountNrOk = 0;
 
             int accountNrOk = RandomAccountNumber();
 
@@ -241,8 +192,7 @@ namespace Bankomat_OOP
 
 
                 AccountInterestRate();
-                //Console.Write("Välj ett giltigt alternativ: ");
-                //menuInputStr = Console.ReadLine();
+        
             }
 
             switch (menuChoice)
@@ -283,22 +233,7 @@ namespace Bankomat_OOP
 
 
 
-            //int accountInterest = RandomInterest();
-
-            //static int RandomInterest()
-            //{
-            //    byte[] randomNumber = new byte[2];
-            //    using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
-            //    {
-            //        rng.GetBytes(randomNumber);
-            //    }
-
-            //    int accountInterestInt = BitConverter.ToInt16(randomNumber, 0);
-
-            //    return accountInterestInt % 90000 + 10000;
-            //}
-
-            //return accountInterest;
+           
 
             decimal interestRateOk;
             decimal accountInterest = RandomInterest();
@@ -311,11 +246,10 @@ namespace Bankomat_OOP
                     rng.GetBytes(randomNumber);
                 }
 
-                // Convert the bytes to a positive integer value
-                int randomInt = BitConverter.ToInt32(randomNumber, 0) & int.MaxValue; // Use bitwise AND to ensure positive
+                int randomInt = BitConverter.ToInt32(randomNumber, 0) & int.MaxValue;
 
-                // Scale the random integer to a range of 0.0 to 5.0
-                decimal accountInterest = (randomInt % 501) / 100.0m;  // Dividing by 200 scales the range to 0.0 - 5.0
+                
+                decimal accountInterest = (randomInt % 501) / 100.0m; 
                 return accountInterest;
 
             }
@@ -323,16 +257,7 @@ namespace Bankomat_OOP
             return interestRateOk = accountInterest;
 
 
-            //Console.WriteLine("Skriv in räntesats");
-            //decimal tempInterestRate = Decimal.Parse(Console.ReadLine());
-            //decimal tempInterestRate;
-            //double tempInterestRatDouble = rnd.Next(-5, 6);
-            //decimal rndNrNext = rnd.Next(0, 6);
-            //double rndNrNextDouble = rnd.NextDouble();
-            //decimal rndNrDec = Convert.ToDecimal(rndNrNextDouble);
-            //rndNrDec = Math.Round(rndNrDec, 2);
-
-            //tempInterestRate = rndNrNext + rndNrDec;
+        
         }
 
         private decimal InterestRateManual()
@@ -368,25 +293,17 @@ namespace Bankomat_OOP
 
 
                 InterestRateManual();
-                //Console.Write("Välj ett giltigt alternativ: ");
-                //menuInputStr = Console.ReadLine();
+                
             }
 
             return interestRateOk;
-            //double tempInterestRateDouble = rnd.Next(-5, 6);
-            //decimal rndNrNext = rnd.Next(0, 6);
-            //double rndNrNextDouble = rnd.NextDouble();
-            //decimal rndNrDec = Convert.ToDecimal(rndNrNextDouble);
-            //rndNrDec = Math.Round(rndNrDec, 2);
-
-            //tempInterestRate = rndNrNext + rndNrDec;
+         
 
         }
 
         private decimal AccountCredit(decimal tempBalance)
         {
             Console.WriteLine("Skriv i max kredit");
-            //decimal tempMaxCredit = Decimal.Parse(Console.ReadLine());
             string tempMaxCreditStr = Console.ReadLine();
 
             decimal maxCreditOk = 0;

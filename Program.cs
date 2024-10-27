@@ -17,9 +17,7 @@ namespace Bankomat_OOP
 
             BankMenuClass bankMenu = new BankMenuClass(inputValidator);
 
-            //DepositClass deposit = new DepositClass(inputValidator);
-
-            //WithdrawClass withdraw = new WithdrawClass(inputValidator);
+           ;
 
             // Exempel data som skapar några konto med data
             Account account1Example = new Account(12345, "Abc", 123, 2.56m, 20000, 50);
@@ -28,9 +26,6 @@ namespace Bankomat_OOP
             accountList.Add(account2Example);
 
             int sortOption = 0;
-
-            //int accountNrCheck;
-
 
             bankMenu.BankMenu(accountList, sortOption);
 

@@ -44,7 +44,6 @@ namespace Bankomat_OOP
                 }
 
                 accountNrCheck = Console.ReadLine();
-                //Withdraw(accountList);
 
             }
 
@@ -56,18 +55,7 @@ namespace Bankomat_OOP
                 return;
             }
 
-            //bool accountExists = false;
-
-            //foreach (Account accounts in accountList)
-            //{
-            //    if (accountNrOk == accounts.AccountNr)
-            //    {
-            //        accountExists = true;
-            //        break;
-            //    }
-            //}
-
-            //if (!accountExists)
+       
 
 
             Console.WriteLine("Hur mycket ska tas ur?");
@@ -111,64 +99,6 @@ namespace Bankomat_OOP
                 }
             }
 
-            //foreach (Account accounts in accountList)
-            //{
-            //    if (accountNrOk == accounts.AccountNr)
-            //    {
-
-
-
-            //        while (quit == false)
-            //        {
-            //            Console.WriteLine("Hur mycket ska tas ur?");
-            //            string withdrawCheck = Console.ReadLine();
-
-            //            while (true)
-            //            {
-            //                if (_inputValidator.IsEmpty(withdrawCheck))
-            //                {
-            //                    Console.WriteLine("Valet kan inte vara tomt. Försök igen.");
-            //                }
-            //                else if (!_inputValidator.IsNumber(withdrawCheck))
-            //                {
-            //                    Console.WriteLine("Valet måste vara ett nummer. Försök igen.");
-            //                }
-            //                else
-            //                {
-            //                    withdrawCheckOk = _inputValidator.ConvertToDecimal(withdrawCheck);
-            //                    break;
-            //                }
-
-            //                Withdraw(accountList);
-            //            }
-
-
-
-            //            if (withdrawCheckOk > accounts.Balance)
-            //            {
-            //                Console.WriteLine($"Uttag är större än kontosaldot\nTryck en knapp för att göra ett nytt uttag eller tryck q för att avsluta uttag.");
-            //                string withdrawRestart = Console.ReadLine();
-            //                if (withdrawRestart == "q")
-            //                {
-            //                    quit = true;
-            //                }
-
-            //            }
-            //            else
-            //            {
-            //                accounts.Balance -= withdrawCheckOk;
-
-            //                Console.WriteLine($"Nya saldot för konto {accounts.AccountNr} är {accounts.Balance}");
-            //                quit = true;
-            //            }
-            //        }
-            //        break;
-
-            //        //accounts.Balance -= withdrawCheck;
-
-            //        //Console.WriteLine($"Nya saldot för konto {accounts.AccountNr} är {accounts.Balance}");
-            //    }
-            //}
         }
     }
 }
