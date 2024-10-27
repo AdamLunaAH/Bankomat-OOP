@@ -48,7 +48,7 @@ namespace Bankomat_OOP
                 if (accounts.AccountNr == tempAccountNr)
                 {
                     Console.WriteLine("Det nya kontots information:");
-                    Console.WriteLine($"AccountNr: {accounts.AccountNr}\nAccountName: {accounts.AccountName}\nIdNr: {accounts.IdNr}\nBalance: {accounts.Balance}\nInterestRate: {accounts.InterestRate}\nMaxCredit: {accounts.MaxCredit}\n");
+                    Console.WriteLine($"Kontonummer: {accounts.AccountNr}\nKontonamn: {accounts.AccountName}\nIdnummer: {accounts.IdNr}\nSaldo: {accounts.Balance}\nRänta: {accounts.InterestRate}\nKreditgräns: {accounts.MaxCredit}\n");
                 }
             }
 
