@@ -1,6 +1,9 @@
 # Bankomat-OOP
- Bankomat med OOP
+ Bankomat med OOP 
 
+
+
+ Instruktioner
 ## OOP Bankomat
 Gör ett program enligt god Object orienterad programmerings standard
 
